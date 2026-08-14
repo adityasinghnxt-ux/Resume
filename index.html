@@ -11,18 +11,12 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@600&display=swap');
         
-        /* 
-           Body is now a flex container to center the resume on screen.
-           This prevents html2canvas margin offset bugs.
-        */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
+            padding: 2rem 0;
+            /* Removed flex to let standard margin centering work seamlessly with html2canvas */
         }
 
         .cursive-sig {
@@ -31,7 +25,7 @@
 
         /* 
            Strict A4 Sizing using exact pixels (96 DPI).
-           Removed margin: auto to fix the left-side cropping issue in PDF.
+           Margin auto centers it on screen.
         */
         .a4-page {
             width: 794px;
@@ -40,7 +34,7 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            flex-shrink: 0; /* Prevents browser from squeezing the width */
+            margin: 0 auto;
         }
 
         /* Print optimizations for absolute A4 sizing */
@@ -313,7 +307,10 @@
             
             const element = document.getElementById('resume-document');
             
-            // Fixed configuration: Forces starting position to (0,0) and resolves margin offsets
+            // Fixed configuration: 
+            // Removed 'x' and 'y' overrides which caused the shifting logic bugs.
+            // By letting html2canvas auto-detect the element's bounding rect, it will 
+            // properly map the capture area even when the document is centered.
             const opt = {
                 margin:       0,
                 filename:     'Aditya_Singh_Resume.pdf',
@@ -321,10 +318,7 @@
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true,
-                    scrollX: 0,
-                    scrollY: 0,
-                    x: 0,
-                    y: 0
+                    scrollY: 0 // Prevents vertical offset if the user has scrolled down the page
                 },
                 jsPDF:        { 
                     unit: 'px', 
