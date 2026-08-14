@@ -11,9 +11,18 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Dancing+Script:wght@600&display=swap');
         
+        /* 
+           Body is now a flex container to center the resume on screen.
+           This prevents html2canvas margin offset bugs.
+        */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }
 
         .cursive-sig {
@@ -22,7 +31,7 @@
 
         /* 
            Strict A4 Sizing using exact pixels (96 DPI).
-           Flex layout ensures footer pushes to bottom.
+           Removed margin: auto to fix the left-side cropping issue in PDF.
         */
         .a4-page {
             width: 794px;
@@ -31,7 +40,7 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            margin: 20px auto;
+            flex-shrink: 0; /* Prevents browser from squeezing the width */
         }
 
         /* Print optimizations for absolute A4 sizing */
@@ -45,6 +54,7 @@
                 background-color: white; 
                 margin: 0; 
                 padding: 0; 
+                display: block;
             }
             .print-hidden { display: none !important; }
             .shadow-2xl { box-shadow: none !important; }
@@ -58,7 +68,7 @@
         }
     </style>
 </head>
-<body class="py-8 text-slate-800">
+<body class="text-slate-800">
 
     <!-- Floating Download Button -->
     <div class="fixed top-4 right-4 flex gap-4 print-hidden z-50">
@@ -68,10 +78,10 @@
         </button>
     </div>
 
-    <!-- Resume Container (Reduced vertical padding to ensure no clipping) -->
+    <!-- Resume Container -->
     <div id="resume-document" class="a4-page shadow-2xl px-8 py-6 relative">
         
-        <!-- Header (Reduced margins) -->
+        <!-- Header -->
         <header class="border-b-[2px] border-blue-800 pb-2 mb-3">
             <h1 class="text-[32px] font-bold text-slate-900 tracking-tight uppercase mb-1">
                 Aditya Singh
@@ -100,7 +110,7 @@
             </div>
         </header>
 
-        <!-- Main Content Grid (Reduced gaps to fit content safely) -->
+        <!-- Main Content Grid -->
         <div class="grid grid-cols-3 gap-5 flex-grow">
             
             <!-- Left Column (Broader) -->
@@ -260,7 +270,7 @@
             </div>
         </div>
 
-        <!-- Footer Area (Reduced margins/padding to ensure it stays in bounds) -->
+        <!-- Footer Area -->
         <div class="mt-auto pt-2 border-t-[1.5px] border-slate-200">
             <h3 class="font-bold text-[13px] text-slate-800 mb-0.5">Declaration</h3>
             <p class="text-slate-600 text-[11px] italic mb-1.5">
@@ -303,7 +313,7 @@
             
             const element = document.getElementById('resume-document');
             
-            // Refined configuration to strictly enforce 1 A4 page
+            // Fixed configuration: Forces starting position to (0,0) and resolves margin offsets
             const opt = {
                 margin:       0,
                 filename:     'Aditya_Singh_Resume.pdf',
@@ -311,7 +321,10 @@
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true,
-                    windowWidth: 794 // Locks render width
+                    scrollX: 0,
+                    scrollY: 0,
+                    x: 0,
+                    y: 0
                 },
                 jsPDF:        { 
                     unit: 'px', 
