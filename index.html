@@ -22,14 +22,13 @@
 
         /* 
            Strict A4 Sizing using exact pixels (96 DPI).
-           Flex layout ensures footer pushes to bottom without cutting off.
+           Flex layout ensures footer pushes to bottom.
         */
         .a4-page {
             width: 794px;
             height: 1123px;
             background: white;
             box-sizing: border-box;
-            /* Removed overflow:hidden to allow natural flow; margins/padding optimized to fit */
             display: flex;
             flex-direction: column;
             margin: 20px auto;
@@ -53,7 +52,6 @@
                 width: 210mm; 
                 height: 297mm; 
                 margin: 0; 
-                padding: 32px 40px; /* Exact match to px-10 py-8 */
                 page-break-after: avoid; 
                 page-break-before: avoid;
             }
@@ -70,11 +68,11 @@
         </button>
     </div>
 
-    <!-- Resume Container -->
-    <div id="resume-document" class="a4-page shadow-2xl px-10 py-8 relative">
+    <!-- Resume Container (Reduced vertical padding to ensure no clipping) -->
+    <div id="resume-document" class="a4-page shadow-2xl px-8 py-6 relative">
         
-        <!-- Header -->
-        <header class="border-b-[2px] border-blue-800 pb-3 mb-4">
+        <!-- Header (Reduced margins) -->
+        <header class="border-b-[2px] border-blue-800 pb-2 mb-3">
             <h1 class="text-[32px] font-bold text-slate-900 tracking-tight uppercase mb-1">
                 Aditya Singh
             </h1>
@@ -102,15 +100,15 @@
             </div>
         </header>
 
-        <!-- Main Content Grid -->
-        <div class="grid grid-cols-3 gap-6 flex-grow">
+        <!-- Main Content Grid (Reduced gaps to fit content safely) -->
+        <div class="grid grid-cols-3 gap-5 flex-grow">
             
             <!-- Left Column (Broader) -->
-            <div class="col-span-2 space-y-4">
+            <div class="col-span-2 space-y-3">
                 
                 <!-- Professional Profile -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-user-focus text-[18px]"></i> Professional Profile
                     </h2>
                     <p class="text-[12.5px] text-slate-700 leading-[1.45] text-justify">
@@ -120,10 +118,10 @@
 
                 <!-- Education -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-graduation-cap text-[18px]"></i> Education
                     </h2>
-                    <div class="space-y-2.5 text-[12.5px]">
+                    <div class="space-y-1.5 text-[12.5px]">
                         <div>
                             <div class="flex justify-between items-start">
                                 <h3 class="font-bold text-slate-800">B.Tech – Mechanical Engineering</h3>
@@ -144,7 +142,7 @@
 
                 <!-- Experience -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-briefcase text-[18px]"></i> Experience
                     </h2>
                     <div class="text-[12.5px]">
@@ -164,7 +162,7 @@
 
                 <!-- Projects & Practical Focus -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-folder-open text-[18px]"></i> Projects & Practical Focus
                     </h2>
                     <ul class="list-disc list-inside text-[12.5px] text-slate-700 space-y-1 leading-[1.45]">
@@ -175,7 +173,7 @@
 
                 <!-- Extra-Curricular -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-medal text-[18px]"></i> Extra-Curricular Activities
                     </h2>
                     <ul class="list-disc list-inside text-[12.5px] text-slate-700 space-y-1 leading-[1.45]">
@@ -187,11 +185,11 @@
             </div>
 
             <!-- Right Column (Narrower) -->
-            <div class="space-y-4">
+            <div class="space-y-3">
                 
                 <!-- Technical Skills -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-wrench text-[18px]"></i> Technical Skills
                     </h2>
                     <div class="flex flex-wrap gap-1.5">
@@ -211,10 +209,10 @@
 
                 <!-- Soft Skills -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-users text-[18px]"></i> Soft Skills
                     </h2>
-                    <ul class="space-y-1.5">
+                    <ul class="space-y-1">
                         <li class="flex items-start gap-1.5 text-slate-700">
                             <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-[14px]"></i>
                             <span class="text-[12.5px] leading-tight">Analytical Skills</span>
@@ -240,7 +238,7 @@
 
                 <!-- Personal Details -->
                 <section>
-                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-0.5 mb-1.5 flex items-center gap-2">
                         <i class="ph-fill ph-user text-[18px]"></i> Personal Details
                     </h2>
                     <div class="space-y-2 text-[12.5px] text-slate-700">
@@ -262,10 +260,10 @@
             </div>
         </div>
 
-        <!-- Footer Area -->
-        <div class="mt-auto pt-3 border-t-[1.5px] border-slate-200">
+        <!-- Footer Area (Reduced margins/padding to ensure it stays in bounds) -->
+        <div class="mt-auto pt-2 border-t-[1.5px] border-slate-200">
             <h3 class="font-bold text-[13px] text-slate-800 mb-0.5">Declaration</h3>
-            <p class="text-slate-600 text-[11px] italic mb-3">
+            <p class="text-slate-600 text-[11px] italic mb-1.5">
                 I hereby declare that the above information is true to the best of my knowledge.
             </p>
             
@@ -275,7 +273,7 @@
                     <p>Place: <span class="border-b border-slate-400 px-2 inline-block min-w-[100px]">India</span></p>
                 </div>
                 <div class="text-center flex flex-col items-center">
-                    <div class="h-8 flex items-end justify-center mb-1">
+                    <div class="h-8 flex items-end justify-center mb-0.5">
                         <img 
                             src="signature.png" 
                             alt="Signature" 
@@ -287,7 +285,7 @@
                 </div>
             </div>
             
-            <div class="text-center mt-3">
+            <div class="text-center mt-2">
                 <p class="text-[9.5px] text-slate-400">
                     * This resume was created with assistance from AI, demonstrating modern adaptability.
                 </p>
