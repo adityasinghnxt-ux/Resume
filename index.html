@@ -22,27 +22,47 @@
 
         /* 
            Strict A4 Sizing using exact pixels (96 DPI).
-           This prevents html2canvas from making scaling errors.
+           Flex layout ensures footer pushes to bottom without cutting off.
         */
         .a4-page {
             width: 794px;
             height: 1123px;
             background: white;
             box-sizing: border-box;
-            overflow: hidden;
+            /* Removed overflow:hidden to allow natural flow; margins/padding optimized to fit */
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
         }
 
-        /* Print optimizations */
+        /* Print optimizations for absolute A4 sizing */
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+        
         @media print {
-            body { background-color: white; padding: 0; }
+            body { 
+                background-color: white; 
+                margin: 0; 
+                padding: 0; 
+            }
             .print-hidden { display: none !important; }
             .shadow-2xl { box-shadow: none !important; }
-            .a4-page { width: 100%; height: 100%; box-shadow: none; margin: 0; }
+            .a4-page { 
+                width: 210mm; 
+                height: 297mm; 
+                margin: 0; 
+                padding: 32px 40px; /* Exact match to px-10 py-8 */
+                page-break-after: avoid; 
+                page-break-before: avoid;
+            }
         }
     </style>
 </head>
 <body class="py-8 text-slate-800">
 
+    <!-- Floating Download Button -->
     <div class="fixed top-4 right-4 flex gap-4 print-hidden z-50">
         <button onclick="downloadPDF()" id="downloadBtn" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg shadow-lg transition-colors font-medium text-sm">
             <i class="ph ph-download-simple text-lg"></i>
@@ -50,29 +70,31 @@
         </button>
     </div>
 
-    <div id="resume-document" class="a4-page mx-auto shadow-2xl p-10 relative flex flex-col">
+    <!-- Resume Container -->
+    <div id="resume-document" class="a4-page shadow-2xl px-10 py-8 relative">
         
-        <header class="border-b-[3px] border-blue-800 pb-4 mb-5">
-            <h1 class="text-3xl font-bold text-slate-900 tracking-tight uppercase mb-1.5">
+        <!-- Header -->
+        <header class="border-b-[2px] border-blue-800 pb-3 mb-4">
+            <h1 class="text-[32px] font-bold text-slate-900 tracking-tight uppercase mb-1">
                 Aditya Singh
             </h1>
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-600 mt-1 text-xs">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-600 mt-1 text-[11.5px]">
                 <span class="flex items-center gap-1">
-                    <i class="ph-fill ph-phone text-blue-700 text-sm"></i> +91 8823803377
+                    <i class="ph-fill ph-phone text-blue-700 text-[13px]"></i> +91 8823803377
                 </span>
                 <span class="flex items-center gap-1">
-                    <i class="ph-fill ph-envelope-simple text-blue-700 text-sm"></i> 
+                    <i class="ph-fill ph-envelope-simple text-blue-700 text-[13px]"></i> 
                     <a href="mailto:aditya.singh.nxt@gmail.com" class="hover:text-blue-800 hover:underline">aditya.singh.nxt@gmail.com</a>
                 </span>
                 <span class="flex items-center gap-1">
-                    <i class="ph-fill ph-student text-blue-700 text-sm"></i> 
+                    <i class="ph-fill ph-student text-blue-700 text-[13px]"></i> 
                     <a href="mailto:bt24mec033@nit.uk.ac.in" class="hover:text-blue-800 hover:underline">bt24mec033@nit.uk.ac.in</a>
                 </span>
                 <span class="flex items-center gap-1">
-                    <i class="ph-fill ph-map-pin text-blue-700 text-sm"></i> Srinagar Garhwal, India
+                    <i class="ph-fill ph-map-pin text-blue-700 text-[13px]"></i> Srinagar Garhwal, India
                 </span>
                 <span class="flex items-center gap-1">
-                    <i class="ph-fill ph-linkedin-logo text-blue-700 text-sm"></i> 
+                    <i class="ph-fill ph-linkedin-logo text-blue-700 text-[13px]"></i> 
                     <a href="https://www.linkedin.com/in/aditya-singh-169235401/" target="_blank" class="hover:text-blue-800 hover:underline">
                         linkedin.com/in/aditya-singh-169235401
                     </a>
@@ -80,81 +102,83 @@
             </div>
         </header>
 
-        <!-- Main Content Area -->
+        <!-- Main Content Grid -->
         <div class="grid grid-cols-3 gap-6 flex-grow">
             
+            <!-- Left Column (Broader) -->
             <div class="col-span-2 space-y-4">
                 
+                <!-- Professional Profile -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-user-focus text-base"></i> Professional Profile
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-user-focus text-[18px]"></i> Professional Profile
                     </h2>
-                    <div class="bg-blue-50/50 border-l-[3px] border-blue-700 px-3.5 py-3 rounded-r-md">
-                        <p class="text-[13px] text-slate-700 leading-relaxed text-justify">
-                            <span class="font-semibold text-slate-900 text-[13.5px]">Mechanical Engineering undergraduate at NIT Uttarakhand</span> building a rigorous foundation in <span class="font-medium text-slate-900">thermodynamics</span>, <span class="font-medium text-slate-900">fluid mechanics</span>, and <span class="font-medium text-slate-900">manufacturing processes</span>. Driven by a technical curiosity toward <span class="font-medium text-slate-900">aerospace technologies</span> and high-performance systems, with a specific focus on propulsion, turbomachinery, and thermal-fluid dynamics. Proficient in translating engineering theory into practical solutions using CAD tools like CATIA and AutoCAD, continuously exploring the intersection of core mechanical design and advanced aerospace engineering.
-                        </p>
-                    </div>
+                    <p class="text-[12.5px] text-slate-700 leading-[1.45] text-justify">
+                        Mechanical Engineering undergraduate at NIT Uttarakhand with a strong foundation in thermodynamics, fluid mechanics, thermal systems, manufacturing, and mechanical design. Driven by a growing interest in aerospace and high-performance engineering, particularly propulsion, turbomachinery, and thermal-fluid systems. Skilled in CAD tools including CATIA and AutoCAD, with a focus on applying engineering fundamentals to practical design and problem-solving. Continuously exploring the intersection of core mechanical engineering, advanced manufacturing, and aerospace technologies.
+                    </p>
                 </section>
 
+                <!-- Education -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-graduation-cap text-base"></i> Education
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-graduation-cap text-[18px]"></i> Education
                     </h2>
-                    <div class="space-y-3 text-[13px]">
+                    <div class="space-y-2.5 text-[12.5px]">
                         <div>
                             <div class="flex justify-between items-start">
                                 <h3 class="font-bold text-slate-800">B.Tech – Mechanical Engineering</h3>
-                                <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">2024 – 2028</span>
+                                <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">2024 – 2028</span>
                             </div>
-                            <p class="text-slate-600">National Institute of Technology Uttarakhand</p>
+                            <p class="text-slate-600 leading-tight">National Institute of Technology Uttarakhand</p>
                             <p class="text-[11px] text-slate-500 italic mt-0.5">Currently in 3rd Year</p>
                         </div>
                         <div>
                             <div class="flex justify-between items-start">
                                 <h3 class="font-bold text-slate-800">High School Diploma, Science (PCM)</h3>
-                                <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">2019 – 2023</span>
+                                <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">2019 – 2023</span>
                             </div>
-                            <p class="text-slate-600">Macro Vision Academy, Burhanpur</p>
+                            <p class="text-slate-600 leading-tight">Macro Vision Academy, Burhanpur</p>
                         </div>
                     </div>
                 </section>
 
+                <!-- Experience -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-briefcase text-base"></i> Experience
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-briefcase text-[18px]"></i> Experience
                     </h2>
-                    <div class="space-y-3 text-[13px]">
-                        <div>
-                            <div class="flex justify-between items-start">
-                                <h3 class="font-bold text-slate-800">Summer Intern</h3>
-                                <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">Summer 2026</span>
-                            </div>
-                            <p class="text-slate-600 font-medium">Indian Oil Corporation Limited (IOCL)</p>
-                            <ul class="list-disc list-inside text-[12px] text-slate-700 space-y-1 mt-1.5 leading-relaxed">
-                                <li><span class="font-semibold text-slate-800">Oil & Gas Operations:</span> Gained practical exposure to pipeline engineering and mechanical workflows.</li>
-                                <li><span class="font-semibold text-slate-800">Industrial Automation:</span> Monitored automation processes utilizing PLC and SCADA systems.</li>
-                                <li><span class="font-semibold text-slate-800">Industrial Safety:</span> Adhered to strict industrial safety protocols in high-risk engineering environments.</li>
-                                <li><span class="font-semibold text-slate-800">Collaboration:</span> Worked closely with cross-functional teams to achieve operational goals.</li>
-                            </ul>
+                    <div class="text-[12.5px]">
+                        <div class="flex justify-between items-start">
+                            <h3 class="font-bold text-slate-800">Summer Intern</h3>
+                            <span class="text-[11px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">Summer 2026</span>
                         </div>
+                        <p class="text-slate-600 font-medium mb-1.5">Indian Oil Corporation Limited (IOCL)</p>
+                        <ul class="list-disc list-inside text-slate-700 space-y-0.5 leading-[1.45]">
+                            <li><span class="font-semibold text-slate-800">Oil & Gas Operations:</span> Gained practical exposure to pipeline engineering and mechanical workflows.</li>
+                            <li><span class="font-semibold text-slate-800">Industrial Automation:</span> Monitored automation processes utilizing PLC and SCADA systems.</li>
+                            <li><span class="font-semibold text-slate-800">Industrial Safety:</span> Adhered to strict industrial safety protocols in high-risk engineering environments.</li>
+                            <li><span class="font-semibold text-slate-800">Collaboration:</span> Worked closely with cross-functional teams to achieve operational goals.</li>
+                        </ul>
                     </div>
                 </section>
 
+                <!-- Projects & Practical Focus -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-folder-open text-base"></i> Projects & Practical Focus
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-folder-open text-[18px]"></i> Projects & Practical Focus
                     </h2>
-                    <ul class="list-disc list-inside text-[13px] text-slate-700 space-y-1.5 leading-relaxed">
+                    <ul class="list-disc list-inside text-[12.5px] text-slate-700 space-y-1 leading-[1.45]">
                         <li>Currently building a strong foundational knowledge base in core mechanical subjects including thermodynamics and manufacturing.</li>
                         <li>Actively seeking to work on practical, real-world engineering projects to bridge the gap between academic theory and industrial application.</li>
                     </ul>
                 </section>
 
+                <!-- Extra-Curricular -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-medal text-base"></i> Extra-Curricular Activities
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-medal text-[18px]"></i> Extra-Curricular Activities
                     </h2>
-                    <ul class="list-disc list-inside text-[13px] text-slate-700 space-y-1.5 leading-relaxed">
+                    <ul class="list-disc list-inside text-[12.5px] text-slate-700 space-y-1 leading-[1.45]">
                         <li>Active member of the <span class="font-semibold text-slate-800">SAE (Society of Automotive Engineers) India</span> club.</li>
                         <li>Actively participated in various collegiate, technical, and cultural fests at NIT Uttarakhand.</li>
                     </ul>
@@ -162,11 +186,13 @@
                 
             </div>
 
+            <!-- Right Column (Narrower) -->
             <div class="space-y-4">
                 
+                <!-- Technical Skills -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-wrench text-base"></i> Technical Skills
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-wrench text-[18px]"></i> Technical Skills
                     </h2>
                     <div class="flex flex-wrap gap-1.5">
                         <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] font-medium border border-slate-200">CATIA</span>
@@ -177,45 +203,47 @@
                         <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] font-medium border border-slate-200">PLC & SCADA</span>
                         <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] font-medium border border-slate-200">Industrial Safety</span>
                         <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[11px] font-medium border border-slate-200">HTML & CSS</span>
-                        <span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-[11px] font-medium border border-blue-100 flex items-center gap-1 w-full mt-1">
+                        <span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-[11px] font-medium border border-blue-100 flex items-center gap-1 w-full mt-0.5">
                             <i class="ph-fill ph-cpu text-xs"></i> AI & Prompting
                         </span>
                     </div>
                 </section>
 
+                <!-- Soft Skills -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-users text-base"></i> Soft Skills
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-users text-[18px]"></i> Soft Skills
                     </h2>
                     <ul class="space-y-1.5">
                         <li class="flex items-start gap-1.5 text-slate-700">
-                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-sm"></i>
-                            <span class="text-[12px]">Analytical Skills</span>
+                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-[14px]"></i>
+                            <span class="text-[12.5px] leading-tight">Analytical Skills</span>
                         </li>
                         <li class="flex items-start gap-1.5 text-slate-700">
-                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-sm"></i>
-                            <span class="text-[12px]">Communication</span>
+                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-[14px]"></i>
+                            <span class="text-[12.5px] leading-tight">Communication</span>
                         </li>
                         <li class="flex items-start gap-1.5 text-slate-700">
-                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-sm"></i>
-                            <span class="text-[12px]">Teamwork</span>
+                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-[14px]"></i>
+                            <span class="text-[12.5px] leading-tight">Teamwork</span>
                         </li>
                         <li class="flex items-start gap-1.5 text-slate-700">
-                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-sm"></i>
-                            <span class="text-[12px]">Quick learner</span>
+                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-[14px]"></i>
+                            <span class="text-[12.5px] leading-tight">Quick learner</span>
                         </li>
                         <li class="flex items-start gap-1.5 text-slate-700">
-                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-sm"></i>
-                            <span class="text-[12px]">Adaptability</span>
+                            <i class="ph-fill ph-check-square-offset text-blue-500 mt-0.5 flex-shrink-0 text-[14px]"></i>
+                            <span class="text-[12.5px] leading-tight">Adaptability</span>
                         </li>
                     </ul>
                 </section>
 
+                <!-- Personal Details -->
                 <section>
-                    <h2 class="text-base font-bold text-blue-900 border-b-2 border-slate-200 pb-1 mb-2 flex items-center gap-2">
-                        <i class="ph-fill ph-user text-base"></i> Personal Details
+                    <h2 class="text-[16px] font-bold text-blue-900 border-b-[1.5px] border-slate-200 pb-1 mb-2 flex items-center gap-2">
+                        <i class="ph-fill ph-user text-[18px]"></i> Personal Details
                     </h2>
-                    <div class="space-y-2 text-[12px] text-slate-700">
+                    <div class="space-y-2 text-[12.5px] text-slate-700">
                         <div>
                             <p class="font-semibold text-slate-800">Date of Birth:</p>
                             <p>28-09-2004</p>
@@ -234,17 +262,17 @@
             </div>
         </div>
 
-        <!-- Footer Area pinned to the bottom of the A4 page -->
-        <div class="mt-auto pt-4 border-t-2 border-slate-200">
-            <h3 class="font-bold text-[13px] text-slate-800 mb-1">Declaration</h3>
-            <p class="text-slate-600 text-[11px] italic mb-4">
+        <!-- Footer Area -->
+        <div class="mt-auto pt-3 border-t-[1.5px] border-slate-200">
+            <h3 class="font-bold text-[13px] text-slate-800 mb-0.5">Declaration</h3>
+            <p class="text-slate-600 text-[11px] italic mb-3">
                 I hereby declare that the above information is true to the best of my knowledge.
             </p>
             
             <div class="flex justify-between items-end text-slate-800 font-medium text-[12px]">
                 <div class="space-y-1.5">
-                    <p>Date: <span class="border-b border-slate-400 px-2 inline-block">August 15, 2026</span></p>
-                    <p>Place: <span class="border-b border-slate-400 px-2 inline-block">India</span></p>
+                    <p>Date: <span class="border-b border-slate-400 px-2 inline-block min-w-[100px]">August 15, 2026</span></p>
+                    <p>Place: <span class="border-b border-slate-400 px-2 inline-block min-w-[100px]">India</span></p>
                 </div>
                 <div class="text-center flex flex-col items-center">
                     <div class="h-8 flex items-end justify-center mb-1">
@@ -252,15 +280,15 @@
                             src="signature.png" 
                             alt="Signature" 
                             class="max-h-full object-contain"
-                            onerror="this.onerror=null; this.outerHTML='<span class=\'cursive-sig text-xl text-slate-800 leading-none\'>Aditya Singh</span>';" 
+                            onerror="this.onerror=null; this.outerHTML='<span class=\'cursive-sig text-[22px] text-slate-800 leading-none\'>Aditya Singh</span>';" 
                         />
                     </div>
-                    <div class="border-b-2 border-slate-800 w-32 mb-1"></div>
+                    <div class="border-b-[1.5px] border-slate-800 w-32 mb-1"></div>
                 </div>
             </div>
             
-            <div class="text-center mt-4">
-                <p class="text-[9px] text-slate-400">
+            <div class="text-center mt-3">
+                <p class="text-[9.5px] text-slate-400">
                     * This resume was created with assistance from AI, demonstrating modern adaptability.
                 </p>
             </div>
@@ -268,6 +296,7 @@
 
     </div>
 
+    <!-- PDF Generation Script -->
     <script>
         function downloadPDF() {
             const btnText = document.getElementById('btnText');
@@ -276,18 +305,21 @@
             
             const element = document.getElementById('resume-document');
             
-            // Simplified settings to prevent layout shifting
+            // Refined configuration to strictly enforce 1 A4 page
             const opt = {
                 margin:       0,
                 filename:     'Aditya_Singh_Resume.pdf',
-                image:        { type: 'jpeg', quality: 1.0 },
+                image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
                     scale: 2, 
-                    useCORS: true, 
-                    scrollX: 0,
-                    scrollY: 0
+                    useCORS: true,
+                    windowWidth: 794 // Locks render width
                 },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { 
+                    unit: 'px', 
+                    format: [794, 1123], 
+                    orientation: 'portrait' 
+                }
             };
             
             html2pdf().set(opt).from(element).save().then(() => {
